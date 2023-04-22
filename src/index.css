@@ -1,0 +1,1516 @@
+body {
+    margin: 0;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    background: #edf0f4;
+  }
+  html{
+    height: 100%;
+  }
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  a{
+    text-decoration: none;
+  }
+  
+  .dpContainer{
+    display: inline-block;
+    position:relative;
+    border-radius: 5px;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    border: 1px solid lightgrey;
+  }
+  .ddTitleContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  .ddTitleContainer:hover{
+    background: lightgray;
+  }
+  .dpDateViewer{
+    height: 25px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(0,0,0,.6);
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .dpDate{
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  .dpDate input{
+    width: 90px;
+    border: none;
+    height: 25px;
+    text-align: center;
+  }
+  .dpDate input:focus{
+    outline: none;
+  }
+  .dpPreIcon,.dpNextIcon{
+    padding: 0 5px;
+  }
+  .dpInnerContainer{
+    position: absolute;
+    text-align: center;
+    left: 0;
+    padding: 5px 0;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
+    z-index: 11;
+    background: white;
+    /* overflow: hidden; */
+    display: flex;
+  }
+  .dateSection{
+    flex:7;
+  }
+  .timeSection{
+    flex:2;
+    display: flex;
+  }
+  .hoursList,.minutesList{
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    overflow: auto;
+    max-height: 325px;
+  }
+  .hoursList::-webkit-scrollbar { 
+      display: none;  /* Safari and Chrome */
+  }
+  .minutesList::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+  .timeItem{
+    padding: 11px;
+  }
+  .timeItem:hover{
+    background-color: lightgrey;
+  }
+  .timeItem.selected{
+    background-color: lightblue;
+  }
+  .ddItem{
+    padding:10px;
+  }
+  .dpMonthYear{
+    width: max-content;
+  }
+  .dpMonthYearViewer{
+    width: 100%;
+    height: 36px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .dpPreIcon,.dpNextIcon,.dpDate,.ddCheckbox,.ddItemImage,.ddItemDetails{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .ddItemDetailsInner{
+    /* padding: 5px; */
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+  }
+  /* .dpPreIcon.icon, .dpNextIcon.icon{
+  
+  } */
+  .dpSeletedDate{
+    background: lightblue;
+  }
+  .dpDateContainer{
+    margin-top: 10px;
+  }
+  .dpDateContainer td{
+    cursor: pointer;
+    padding: 10px;
+  }
+  .dpDateContainer th{
+    padding: 5px;
+  }
+  .ddObjectItem:hover, .ddItem:hover,.dpDateContainer td:hover{
+    background: lightgray;
+    border-radius: 5px;
+  }
+  .ddObjectItem{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+  .ddItemImage{
+    height: 30px;
+    width: 30;
+    border-radius: 50%;
+    margin: 0 10px;
+  }  
+  .ddItemHeader{
+    font-weight: 700;
+  }
+  .ddCheckboxInner{
+    width: 15px;
+    height: 15px;
+  }
+  
+  /* css for header.js */
+  
+  .mainMenu, .eventsMenu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    background: #f6fbfd;
+  }
+  .mainMenu{
+    z-index: 4;
+  }
+  .eventsMenu{
+    /* margin-top: 10px; */
+    padding: 5px 0;
+    border: none;
+    box-shadow: none;
+    top:52px;
+    left: 0;
+    z-index: 1;
+  }
+  .mainMenu .item, .eventsMenu .item{
+    padding: 0px 20px;
+    color: rgba(0,0,0,.87);
+    font-weight:400;
+    border-left: 1px solid rgba(34,36,38,.1);
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .eventsMenu .item{
+    border-left: none !important;
+  }
+  .hoverlinks:hover, .hdButton:hover{
+    background: lightgray;
+  }
+  .item.last{
+    border-right: 1px solid rgba(34,36,38,.1);
+  
+  }
+  .item.brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .right{
+    margin-left: auto !important;
+  }
+  .brandLogo{
+    width: 40px;
+    height: 40px;
+    padding: 0 10px;
+  }
+  .hdButton{
+    padding: 0px 10px;
+    height: 30px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    background:rgba(0,0,0,.1);
+    color:rgba(0,0,0,.6);
+    font-weight:700;
+    font-size: 14px;
+    /* margin: 0 1px; */
+  
+  }
+  .buttonText{
+    padding: 0 10px;
+  }
+  .leftButton{
+   border-radius: 5px 0 0 5px;
+  }
+  .rightButton{
+    border-radius: 0 5px 5px 0;
+  }
+  .middleButton{
+    border-radius: 0px!important;
+  }
+  .eventSlot{
+    width: 100%;
+  }
+  .timeSlot{
+    min-width: 80px;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .eventsBody{
+    position: relative;
+    top:113px;
+    overflow: hidden;
+  }
+  .weekCol{
+    width: 14.2%;
+    height: 15%;
+  }
+  .weekTable, .weekTable td, .weekTable th , .dayTable, .dayTable td, .dayTable th{
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+  }
+  .weekTable td, .weekTable th,.dayTable td, .dayTable th{
+    height: 40px;
+  } 
+  .monthViewContainer{
+    height: calc(100vh - 113px);
+  }
+  .monthTable{
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+  }
+  .monthRow{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex:3;
+  }
+  .monthRow.header{
+    flex:1;
+  }
+  .monthCol{
+    flex:1;
+    width: 100%;
+    height: 100%;
+    border-width: 1px 1px 0 0;
+    border-style: solid;
+    border-color: lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  /* css for popup */
+  
+  .profileSliderContainer{
+    position: absolute;
+    right:5px;
+    top:55px;
+    width: 255px;
+    height:calc(100vh - 60px);
+    background: white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px grey;
+  }
+  .signout{
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .createPopupContainer{
+    position: absolute;
+    left:-111px;
+    top:33px;
+    width: 240px;
+    background: white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px grey;
+  }
+  .createItem{
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+  }
+  .createItem:hover{
+    background: lightgrey;
+  }
+  .eventPopupContainer{
+    position: fixed;
+    left:calc(50vw - 250px);
+    top:60px;
+    width: 500px;
+    background: white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px grey;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 15;
+  }
+  .eventPopupContainer .item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+  }
+  .popupOuter{
+    position: relative;
+    top:0;
+    left: 0;
+    z-index: 2;
+  
+  }
+  .eventPopupContainer .item .label{
+    flex:1;
+    padding: 5px;
+  }
+  .itemDropdown{
+    flex: 2;
+    display: flex;
+    align-items: center;
+  }
+  .eventPopupContainer .item.buttons{
+    justify-content: space-around;
+  }
+  .addButton, .cancelButton{
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+  }
+  .title{
+    text-align: center;
+    border-bottom: 1px solid lightgrey;
+  }
+  
+
+  /* signup page css */
+
+  .signupContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 200px);
+  }
+
+  .signupForm{
+    background: white;
+    padding: 20px;
+    border: none;
+    box-shadow: 1px 1px 10px 1px lightgrey;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+  }
+  .signupTitle{
+    font-size: 23px;
+    text-align: center;
+    font-weight:500;
+  }
+  .signupLabel{
+    text-align: left;
+    padding: 10px 0;
+  }
+  .signupForm input{
+    height: 30px;
+    width: 300px;
+  }
+  .signupButton{
+    margin: 20px 0px;
+    height: 35px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .signupProviders{
+    margin-top: 20px;
+    width: 350px;
+  }
+  .oauthSignup{
+      text-align: center;
+      border: none;
+      box-shadow: 0px 0px 3px 1px lightgrey;
+      border-radius: 3px;
+      padding: 10px;
+      margin: 10px 0px;
+      cursor: pointer;
+  }
+  .signupLink{
+    text-align: center;
+  }
+  .error{
+    padding: 0 5px 10px 5px;
+    text-align: center;
+    color: red;
+  }
+
+
+
+
+
+ /* report css */
+
+
+
+.reportContainer{
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  position: fixed;
+  z-index: 2;
+}
+.reportHeader{
+  display: flex;
+  flex-direction: row;
+  background: white;
+  padding: 5px;
+}
+.reportHeader > .hdButton{
+  margin: 5px;
+}
+.reportBody{
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+  height : calc(100vh - 120px);
+  overflow: hidden;
+}
+.reportFilter{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  min-width: 300px;
+  background: white;
+  margin: 10px;
+  border-radius: 15px;
+  flex:1;
+  overflow: hidden;
+  position: relative;
+}
+.filterbyField{
+  overflow-y:auto;
+  max-height:calc(100vh - 291px)
+}
+.filterFieldsList{
+  display: flex;
+  flex-direction: column;
+}
+.filterFieldItem{
+  padding: 10px;
+}
+.listContainer{
+  margin: 10px 0 10px 10px;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  flex:4;
+  overflow: hidden;
+  position: relative;
+}
+.recordsContainerWrapper{
+  overflow: scroll;
+  max-height: calc(100vh - 170px);
+  border-radius: 15px;
+}
+.recordsContainer{
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  border-radius: 15px;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* .subviewContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+/* .subviewContainer {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+} */
+.reportFooter{
+  display: flex;
+  flex-direction: row;
+  max-height: 35px;
+  border-radius: 0 0 0 15px;
+  margin-top: 0px;
+}
+.recordCount,.pageLimit,.pagination{
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+.pageLimit{
+  margin-left: auto !important;
+}
+.pagination > span{
+  padding: 5px;
+}
+.prev,.next{
+  background: lightgrey;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pageNumber{
+  width:30px;
+  text-align: center;
+}
+.recordHeader{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2.5px solid #d7e2ed;  
+  position: -webkit-sticky;
+  position: sticky;
+  top:0px !important;
+  z-index: 10;
+  width: max-content;
+  min-width: calc(100vw - 365px);
+} 
+div.recordItem div:nth-child(1){
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+  z-index: 9 !important;
+}
+div.recordItem div:nth-child(2){
+  position: -webkit-sticky;
+  position: sticky;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  left: 100px;
+  z-index: 9 !important;
+}
+div.recordHeader div:nth-child(1){
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+  z-index: 11 !important;
+}
+div.recordHeader div:nth-child(2){
+  position: -webkit-sticky;
+  position: sticky;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  left: 100px;
+  z-index: 11;
+}  
+.recordItem{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #edf0f4;  
+  width: max-content;
+  cursor: pointer;
+}
+.fieldItem{
+  padding: 10px 0 10px 10px;
+  /* border-right: 1px solid grey; */
+  flex:1;
+  display: flex;
+  background: white;
+  min-width: 100px;
+  position: relative;
+}
+.fieldText{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recordsContainer:last-child{
+  border-bottom: 1px solid #edf0f4;
+}
+.recordItem > .ddCheckbox{
+  width: 50px;
+  background: white;
+}
+.recordHeader > .ddCheckbox{
+  width: 50px;
+  background: white;
+}
+.widthResizer{
+  width: 21px;
+  cursor: ew-resize;
+  height: 100%;
+  position: absolute;
+  top:0;
+  right: -11px;
+  z-index: 12;
+}
+.widthResizer::after{
+  position: absolute;
+  top: 6px;
+  right: 11px;
+  content:"";
+  width: 1px;
+  height: 67%;
+  background: #d7e2ed;
+  z-index: 12;
+} 
+.widthResizer:hover:after{
+  background-color:#5483d0!important;
+}
+.fieldItem:hover .widthResizer::after{
+  width: 2px;
+  background:#d7e2ed ;
+  top: 0;
+  height: 100%;
+}
+.listHeader{
+  display: flex;
+  flex-direction: row;
+}
+.listBody{
+  overflow: scroll;
+  max-height: calc(100vh - 160px);
+}
+.listReportSettings{
+  position: absolute;
+  right: 0;
+  top: 42px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px rgb(0 0 0 / 10%);
+  z-index: 11;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 180px;
+}
+.listReportSettings > div{
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+
+
+
+
+.fieldSetting{
+  position: absolute;
+  background: white;
+  padding: 5.5px;
+  cursor: pointer;
+  top: 0;
+  right:0;
+  border-left: 1px solid lightgrey;
+  border-bottom: 2.5px solid #d7e2ed;  
+  z-index: 13;
+}
+.popupOverlay{
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0.5;
+    background-color: rgb(10, 10, 10);
+    z-index: 14;
+    width: 100vw;
+    height: 100vh;
+  }
+  .fieldsSettingContainer{
+    text-align: left;
+    position: fixed;
+    left:calc(50vw - 180px);
+    top:0;
+    width: 360px;
+    background: white;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0 5px 15pxrgba(0,0,0,.5);
+    z-index: 15;
+    max-height: calc(100vh - 10px);
+    overflow: hidden;
+    /* transition-duration: 3s; 
+    transition-delay: 1s;
+    transform: translate(0px, 851px); */
+    /* transition: opacity 0.3s ease-out, bottom 0.3s ease-out; */
+  
+  }
+  .fieldSettingHeader{
+    font-weight: 600;
+    text-align: left;
+    padding: 20px 30px;
+    font-size: 22px;
+    color: #111;
+    font-family: LatoBold,sans-serif;
+  }
+  
+  .fieldsSearchbar{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 3px 10px;
+    margin: 0px 30px 10px 30px;
+    display: flex;
+    align-items: center;
+  }
+  .fieldsSearchbar input{
+    width: 100%;
+    height: 25px;
+    border: none;
+    margin: 0 5px;
+  }
+  .fieldsSearchbar input:focus{
+    outline: none;
+  }
+  .fieldsContainer{
+    max-height: calc(100vh - 100px);
+    overflow: auto;
+  }
+  .fieldSettingItem{
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    align-items: center;
+    cursor:move;
+  }
+  .fieldSettingItem[drop-active=true] {
+   background-color: red;
+  }
+  .fieldSettingItem:hover{
+    background-color: #e6edf7;
+  }
+  .fieldSettingItem:hover .dragIcon{
+    visibility: visible;
+  }
+  .dragIcon{
+    visibility: hidden;
+    width: 22px;
+  }
+  .fieldSettingItem .fieldItem{
+    background: none;
+  }
+  .dragover_placeholder{
+    border: 2px dashed lightgrey;
+    height: 35px;
+    background-color: #f2f7f7;
+  }
+  .fieldCheckbox{
+    cursor: pointer;
+    display: flex;
+  }
+  .fieldCheckbox.unChecked{
+    margin-left: 22px;
+  }
+  .fieldSettingButton{
+    padding: 20px;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+    border: 1px solid grey;
+    flex:1;
+  }
+  .fieldSettingFooter{
+    display: flex;
+    flex-direction: row;
+    background-color: lightgrey;
+  }
+  .filterTitle{
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px;
+  }
+  .filterFieldCheckbox{
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  .sortbyField{
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+  }
+  .doubleInput{
+    display: flex;
+    max-width: 250px;
+    align-items: center;
+  }
+  .doubleInput > input{
+    width: 115px;
+  }
+  .doubleInputSeparator{
+    margin: 0 5px;
+  }
+  .filterFooter{
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    box-shadow: 0 -2px 4px -1px rgb(0 0 0 / 15%);
+    padding: 10px;
+    background: white;
+  }
+  .applyButton,.clearButton{
+    padding: 7px 20px;
+    margin:5px;
+    border-radius: 5px;
+   cursor: pointer;
+  }
+  .applyButton{
+    background-color: lightblue;
+    box-shadow: 0 -2px 0 0 lightblue inset;
+  }
+  .clearButton{
+    background-color: lightgrey;
+    box-shadow: 0 -1px 0 0 #d0d4df inset;
+    outline: 0;
+    background: linear-gradient(#fcfdff 0,#eaeef5 100%) no-repeat padding-box;
+    border: 1px solid #d0d4df;
+  }
+  .disabled{
+    cursor:auto;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .filters,.filterOperators, .filterValues{
+    margin: 5px 0px;
+  }
+ .filterInput{
+  width: 196px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  height: 25px;
+  padding: 0 5px;
+ }
+ .filterInput:focus{
+  outline: none;
+ }
+/* css for dropdown */
+.ddContainer{
+  display: inline-block;
+  position:relative;
+  border-radius: 5px;
+  border:1px solid lightgrey;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  height:25px;
+}
+.ddSelectedContainer{
+  padding: 0px 5px;
+  cursor: pointer;
+  display: flex;
+  max-width: 100%;
+}
+.ddArrow{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom:4px;
+  padding: 5px;
+}
+.arrow {
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+}  
+.up {
+  margin-top:8px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.ddMultiSelectedItems{
+  padding: 3px;
+  overflow-x: auto;
+  max-width: 100%;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.ddMultiSelectedItems::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.multiSelectItem{
+  margin-right: 5px;
+  padding: 0 3px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+.ddSelectedItem{
+  padding: 3px;
+  width: 100%;
+}
+.ddSelectedItems{
+  max-width: calc(100% - 20px);
+}
+.ddMenu{
+  padding: 5px;
+  margin-top: 3px;
+  position: absolute;
+  left:0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
+  z-index: 11;
+  background: white;
+  width: 200px;
+}
+.fieldValue .ddMenu{
+  left:-1px;
+  width: 198px;
+}
+.ddSearchbar{
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+.ddSearchbar input{
+  width: 100%;
+  height: 20px;
+  border: none;
+  margin: 0 5px;
+}
+.ddSearchbar input:focus{
+  outline: none;
+}
+.ddItemsContainer{
+  max-height: 250px;
+  overflow: auto;
+}
+.ddItem{
+  padding: 5px;
+  display: flex;
+  cursor: pointer;
+}
+.ddItem > input[type="checkbox"]{
+  margin-right:10px;
+}
+
+/* css for recordPreview */
+.recordPreviewContainer{
+  margin: 10px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  flex:2;
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+}
+.recordPreviewInner{
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.recordButtons{
+  display: flex;
+  margin: 15px 0px;
+  /* flex-direction: row-reverse; */
+  justify-content: flex-end;
+}
+.buttonItem{
+  margin: 0px 5px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 5px 10px;
+  height: 18px;
+  cursor: pointer;
+  position: relative;
+}
+.buttonList{
+  margin: 0px 5px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+.buttonListInner{
+  display: flex;
+  justify-content: space-between;
+}
+.buttonListInner > .ddArrow{
+  padding: 0px!important;
+  margin-left: 8px !important;
+}
+.moreActions{
+  top:30px;
+  left:0px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
+  background:white;
+  width: max-content;
+}
+.moreActions .buttonItem{
+  border: none;
+  height: auto;
+}
+.recordFieldsContainer{
+  height: calc(100% - 111px);
+  overflow: hidden;
+}
+.recordFieldsContainerInner{
+  max-height:100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.fieldView{
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  margin: 5px 0;
+}
+.fieldlabel{
+  flex: 1;
+}
+.fieldError{
+ margin-top:5px;
+ color:red;
+}
+.fieldValue{
+  flex: 2;
+  display: flex;
+  max-width: 280px;
+  flex-direction: column;
+}
+.fieldValue > div{
+  display: flex;
+}
+.fieldValue.view{
+  flex-direction: row;
+}
+.fieldValue > input{
+  width: 200px;
+}
+.fieldValue > textarea{
+  width: 202px;
+}
+.fieldValue > input[type="checkbox"]{
+  width: 15px;
+}
+
+
+.fieldValue >div>input{
+  width: 200px;
+}
+.fieldValue > div>textarea{
+  width: 202px;
+}
+.fieldValue > div>input[type="checkbox"]{
+  width: 15px;
+}
+
+.editIcon{
+  margin-left: auto;
+}
+.editIcon svg{
+  margin: 0 3px;
+  cursor: pointer;
+}
+.allEditButtons{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+} 
+.allEditButtonsInner{
+  display: flex;
+}
+.allSaveButton,.allCancelButton{
+  padding: 10px;
+  flex:1;
+  font-size: large;
+  cursor: pointer;
+}
+.allSaveButton{
+  background-color: rgb(60, 129, 219);
+  color:white
+}
+.deleteConfirmPopup{
+  position: fixed;
+  top:calc(50vh - 100px);
+  left:calc(50vw - 150px);
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  z-index: 10;
+  box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
+  background-color: white;
+  border-radius: 3px;
+}
+.deleteConfirmPopup{
+  padding: 20px;
+}
+.popupContent{
+  padding: 30px 0;
+  text-align: center;
+}
+.popupButtons{
+  display: flex;
+}
+.popupButtons > .cancel,.confirm{
+  flex:1;
+  padding: 10px;
+  font-size: large;
+  cursor: pointer;
+}
+.popupButtons > .confirm{
+  background-color: rgb(60, 129, 219);
+  color: white;
+}
+.moduleManagerContainer{
+  display: flex;
+  top: 50px;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: calc(100vh - 70px);
+  position: fixed;
+  z-index: 2;
+  margin: 10px 0;
+}
+.moduleList{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  min-width: 300px;
+  background: white;
+  margin: 10px;
+  border-radius: 15px;
+  flex: 1 1;
+  overflow: hidden;
+  position: relative;
+}
+.moduleForm{
+  padding:20px;
+  margin: 10px;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 4 1;
+  overflow: hidden;
+  position: relative;
+}
+.moduleFormInner{
+  max-width: 900px;
+}
+.fieldsList{
+  margin: 10px 10px 10px 10px;
+  border-radius: 15px;
+  max-width: 300px;
+  min-width: 300px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  flex: 3 1;
+  overflow: hidden;
+  position: relative;
+}
+.moduleItem{
+  padding : 10px;
+  color: black;
+}
+.moduleItem.active{
+  background-color: lightblue;
+}
+.moduleItem:hover{
+  background-color: lightgrey;
+}
+.fieldsHolder{
+  display: flex;
+  align-items:center;
+  padding: 10px 0;
+  cursor: grabbing;
+}
+.fieldsHolder.header{
+  font-size: larger;
+  font-weight: 500;
+  margin-top: 30px;
+  cursor: auto;
+}
+.ftype{
+  flex:1;
+  display: flex;
+  align-items: center;
+}
+.moduleName .ftype{
+  flex: none;
+  margin-right:20px;
+}
+.fDragIcon{
+  margin-right: 10px;
+  margin-top:4px;
+  margin-left:-25px;
+  visibility: hidden;
+}
+.fNameInput{
+  flex:2;
+  text-align: center;
+}
+.moduleName .fNameInput{
+  flex: none;
+  margin:0 20px;
+}
+.fNameInput>input{
+  width: 200px;
+  height:15px;
+  padding: 5px;
+}
+.fdelete{
+  text-align: center;
+  margin-left: auto;
+}
+.fdeleteIcon{
+  cursor: pointer;
+}
+.mmtitle{
+  font-size:larger;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  background-color: #f6fbfd;
+}
+.plusSign{
+  font-size: x-large;
+  margin-right:5px;
+}
+.templateField{
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+.fieldName:hover{
+  border-color: black;
+}
+.fieldName{
+  display: flex;
+  text-align: center;
+  width: 100%;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: grabbing;
+}
+.addButton{
+  margin-left: auto;
+  cursor: pointer;
+  background-color: black;
+  padding: 2px 5px;
+  color:white;
+  border-radius: 10px;
+  width:30px;
+}
+.scButtons{
+  display: flex;
+}
+.scButtons > .saveButton{
+  padding:5px 25px;
+  /* color:white; */
+  background-color: lightblue;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.scButtons > .resetButton{
+  padding:5px 25px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.formHeader{
+  font-size:larger;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid lightgrey;
+}
+.editModule{
+  margin-left:5px;
+  display: flex;
+  align-items: center;
+}
+.fieldEditContainer{
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  padding: 5px;
+  width: 100%;
+}
+.fieldEditContainer.selected{
+  border-color: blue;
+}
+.fsettingsIcon{
+  display: flex;
+  align-items: center;
+  flex:1;
+  font-weight: 800;
+  margin:0 10px;
+}
+.fsettingsIcon > svg{
+  cursor: pointer;
+}
+.fsettingsIcon > input[type="checkbox"]{
+  cursor: pointer;
+}
+.fsettingsIcon.settingsIcon{
+  flex:0;
+}
+.labelInput{
+  flex:3;
+}
+.labelInput > input{
+  width:250px;
+  border-radius: 5px;
+  border: none;
+  height:20px;
+  flex:5;
+}
+.fieldEditContainer >.fieldType{
+  min-width: 100px;
+  margin: 0 10px;
+}
+.fieldsAddContainer{
+  display: flex;
+  width:100%;
+  max-height: calc(100vh - 233px);
+  overflow: auto;
+}
+.fieldSettingsPopupOuter{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 14;
+}  
+.fieldSettingsPopup{
+  position: absolute;
+  top:3px;
+  left:calc(50% - 195px);
+  background-color: white;
+  width: 390px;
+  background: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px grey;
+  padding: 20px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(1px);
+}  
+.fieldsListContainer{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  overflow-y: auto;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding:0 10px;
+  height: fit-content;
+}
+.fieldSettingsItem{
+  display: flex;
+  padding: 10px;
+}
+.fieldSettingsItem > input{
+  width: 150px;
+}
+.fieldSettingsItem > div{
+  flex:1;
+}
+.fieldSettingsItem > div > .delete{
+  color: red;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid lightblue;
+  max-width:150px;
+  padding: 5px;
+  border-radius: 5px;
+  flex:1;
+}
+.sfEdit{
+  flex:1;
+}
+.sfEdit > .saveButton{
+  margin-left: 0;
+}
+.addOptionButton{
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #efefef;
+  border-radius: 3px;
+  padding: 0 3px;
+  width: 120px;
+  cursor: pointer;
+}
+
+.addOptionButton > .addIcon{
+  font-weight: 800;
+  margin-right: 3px;
+  font-size: larger;
+}
+.fsInput{
+  margin:5px 0;
+}
+input[type ="checkbox"]{
+  margin-left: 0;
+}
+
+
+.profileDetails{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+.profileImage{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.loader{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  backdrop-filter: blur(1px);
+  z-index: 3;
+}
