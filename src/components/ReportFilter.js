@@ -148,6 +148,8 @@ export default function ReportFilter(props){
         })
     }
     return  <div className="reportFilter">
+                {props.isLoading ? <div className="loaderOuter"><div className="reportLoader"></div></div>:
+                <>
                 <div className="filterTitle">Sort By</div>
                 <div className={"sortbyField"+(Object.keys(criteriaMap).length !== 0 ? " disabled":"")}>
                     <NewDropdown items={["Asc","Desc"]} setSelection={setSelectedSortOrder} selectedItem={sortOrder} style={{height:"25px",maxWidth:55}}></NewDropdown>
@@ -198,7 +200,7 @@ export default function ReportFilter(props){
                     <div className={"applyButton"+(!filterApplied?"":" disabled")} onClick={applyFilter}>Apply Filter</div>
                     <div className={"clearButton"+(Object.keys(criteriaMap).length?"":" disabled")} onClick={clearFilter}>Clear</div>
 
-                </div>   
+                </div></>}  
             </div>
         
 }    

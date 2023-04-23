@@ -20,7 +20,6 @@ export default function App(){
     const [orgId,setOrgId] = useState("loading");
     const {user,signIn,signUp} = useAuth();
     const userEmail = user?user.email:null;
-
     useEffect(()=>{
         async function _getData(userEmail){
             let res = await getOrgId(userEmail);
@@ -30,12 +29,11 @@ export default function App(){
             _getData(userEmail)
 
     },[userEmail]);
-
     if(user.state === "loading"){
-        return <div></div>;
+        return <div className="loaderOuter fixed"><div className="reportLoader"></div></div>;
     }
     if(user.uid && orgId === "loading"){
-        return <div></div>;
+        return <div className="loaderOuter fixed"><div className="reportLoader"></div></div>;
     }
     let routes = [];
     if(user.state === "signOut"){
@@ -85,12 +83,12 @@ export default function App(){
         ]
     }   
     else if(user.uid && orgId){
-        const checkOrgId = ({params})=>{
+        const checkOrgId = async ({params})=>{
             if(["signin","signup","setup"].indexOf(params.orgId) !== -1)
                 return redirect("/");
             if(params.orgId !== orgId)
                 return redirect('/error')
-            return getOrgDetails(params);
+            return await getOrgDetails(params);
         }
         routes = [
             { 
@@ -110,7 +108,6 @@ export default function App(){
                     },
                     {
                         path : "/:orgId/module/:moduleName",
-                        loader : getReportData,
                         element : <Report/>
                     },
                     {  

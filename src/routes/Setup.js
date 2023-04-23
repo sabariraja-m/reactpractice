@@ -1,6 +1,5 @@
 
-import { useEffect } from "react";
-import { Link,Form, useNavigate, useActionData} from "react-router-dom";
+import { Form, useActionData} from "react-router-dom";
 export default function Setup(){
     console.log("Setup Compnonent");
     const error = useActionData();

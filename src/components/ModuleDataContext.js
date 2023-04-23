@@ -1,15 +1,25 @@
 import { createContext , useContext , useEffect, useReducer, useState } from "react";
-import { getRecords , addRecord,updateRecord, deleteRecord,updateFields } from "../firebase";
+import { getRecords , addRecord,updateRecord, deleteRecord,updateFields, getReportData } from "../firebase";
 import { useParams } from "react-router-dom";
 const ModuleContext = createContext(null); 
 const ModuleDispatchContext = createContext(null);
 const FilterContext = createContext(null);
-function initModuleData(initData){
-    return {"records":initData.records}
-}
+
 export default function ModuleDataProvider(props){
-    const [moduleData,dispatch]=useReducer(handleModuleData,props.moduleData,initModuleData);
-    const [filter,setFilter]=useState({"sortBy":"ct","sortOrder":"Asc","criteriaList":[],"pageLimit":20,"currentPage":1,"firstVisible":props.moduleData.firstVisible,"lastVisible":props.moduleData.lastVisible})
+    const {moduleName,orgId} = useParams();
+    const [moduleData,dispatch]=useReducer(handleModuleData,{"records":[],"fields":[],"isLoading":false});
+    const [filter,setFilter]=useState({"sortBy":"ct","sortOrder":"Asc","criteriaList":[],"pageLimit":20,"currentPage":1,"firstVisible":null,"lastVisible":null})
+    
+    useEffect(()=>{
+        async function setInitData(){
+            dispatch({"type":"setLoading","isLoading":true})
+            let reportData = await getReportData({moduleName,orgId});
+            dispatch({"type":"setInit","state":{"fields":reportData.fields,"records":reportData.records.records,"isLoading":false}})
+            setFilter({...filter,"firstVisible":reportData.records.firstVisible,"lastVisible":reportData.records.lastVisible})
+        }
+        setInitData()
+    },[moduleName,orgId])
+    
     return (<ModuleContext.Provider value={moduleData}>
                 <ModuleDispatchContext.Provider value={dispatch}>
                     <FilterContext.Provider value={{filter,setFilter}}>
@@ -28,17 +38,17 @@ export function useModuleData(){
 
 function handleModuleData(state,action){
     switch (action.type){
-        case 'setStatus':{
-            return {...state,"status":action.status,"error":action.error};
+        case 'setLoading':{
+            return {...state,"isLoading":action.isLoading};
         }
-        case 'setFilter':{
-            return {...state,"filter":action.filter,"status":"loading","error":null};
+        case 'setInit':{
+            return action.state;
         }
         case 'set':{
-            return {...state,"filter":action.filter,"records":action.records,"status":null,"error":null};
+            return {...state,"records":action.records};
         }
         case 'add':{
-            return {...state,"records":[action.record,...state.records],"status":null,"error":null};
+            return {...state,"records":[action.record,...state.records]};
         }
         case 'update':{
             let records = state.records.map((record)=>{
@@ -46,13 +56,13 @@ function handleModuleData(state,action){
                     return {...record,...action.record};
                 return record;
             })
-            return {...state,records,isLoading:false,"status":null,"error":null};
+            return {...state,records};
         }
         case 'delete':{
             let records = state.records.filter((record)=>{
                 return record.id !== action.id;
             })
-            return {...state,records,isLoading:false,"status":null,"error":null};
+            return {...state,records};
         }
         default: {
             throw Error('Unknown action: ' + action.type);
