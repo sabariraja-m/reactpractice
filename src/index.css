@@ -240,14 +240,14 @@ body {
     padding: 0px 10px;
     height: 30px;
     text-align: center;
-    border: none;
+    border: 1px solid lightblue;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-    background:rgba(0,0,0,.1);
+    background: white;
     color:rgba(0,0,0,.6);
     font-weight:700;
     font-size: 14px;
@@ -1104,6 +1104,12 @@ div.recordHeader div:nth-child(2){
  color:red;
  text-align: left;
 }
+.fieldError.noMargin{
+  margin-top:0px;
+}
+.borderError{
+  border-color: red !important;
+}
 .fieldValue{
   flex: 2;
   display: flex;
@@ -1344,14 +1350,18 @@ div.recordHeader div:nth-child(2){
   padding:5px 25px;
   /* color:white; */
   background-color: lightblue;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   margin-left: 5px;
+  border: none;
 }
 .scButtons > .resetButton{
-  padding:5px 25px;
+  padding: 5px 25px;
   margin-left: 5px;
   cursor: pointer;
+  background: white;
+  border: 1px solid lightblue;
+  border-radius: 5px;
 }
 .formHeader{
   font-size:larger;
@@ -1445,6 +1455,7 @@ div.recordHeader div:nth-child(2){
   border-radius: 5px;
   padding:0 10px;
   height: fit-content;
+  min-height: 100px;
 }
 .fieldSettingsItem{
   display: flex;
@@ -1561,4 +1572,23 @@ input[type ="checkbox"]{
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.addSample{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addSample > span{
+  padding: 10px;
+  border-radius: 5px;
+  background: lightblue;
+  cursor: pointer;
+}
+.fieldsHolderOuter.empty{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
 }

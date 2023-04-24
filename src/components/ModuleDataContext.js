@@ -8,14 +8,14 @@ const FilterContext = createContext(null);
 export default function ModuleDataProvider(props){
     const {moduleName,orgId} = useParams();
     const [moduleData,dispatch]=useReducer(handleModuleData,{"records":[],"fields":[],"isLoading":false});
-    const [filter,setFilter]=useState({"sortBy":"ct","sortOrder":"Asc","criteriaList":[],"pageLimit":20,"currentPage":1,"firstVisible":null,"lastVisible":null})
+    const [filter,setFilter]=useState({"sortBy":"created_time","sortOrder":"Asc","criteriaList":[],"pageLimit":20,"currentPage":1,"firstVisible":null,"lastVisible":null})
     
     useEffect(()=>{
         async function setInitData(){
             dispatch({"type":"setLoading","isLoading":true})
             let reportData = await getReportData({moduleName,orgId});
             dispatch({"type":"setInit","state":{"fields":reportData.fields,"records":reportData.records.records,"isLoading":false}})
-            setFilter({...filter,"firstVisible":reportData.records.firstVisible,"lastVisible":reportData.records.lastVisible})
+            setFilter({"sortBy":"created_time","sortOrder":"Asc","criteriaList":[],"pageLimit":20,"currentPage":1,"firstVisible":reportData.records.firstVisible,"lastVisible":reportData.records.lastVisible})
         }
         setInitData()
     },[moduleName,orgId])
@@ -74,6 +74,7 @@ export function useModuleDispatch(props){
     const dispatch = useContext(ModuleDispatchContext);
     const [status,setStatus] = useState(null);
     const [error,setError] = useState(null);
+    const {setFilter}=useContext(FilterContext);
     const params = useParams();
    
     const handleModuleDispatch = async(action)=>{
@@ -81,8 +82,11 @@ export function useModuleDispatch(props){
         if(functionMap[action.type]){
             setStatus("loading");
             let res = await functionMap[action.type](action,params);
-            if(res.status === "success")
+            if(res.status === "success"){
+                if(res.action && res.action.filter)
+                    setFilter({...res.action.filter})
                 dispatch(res.action);
+            }    
             setStatus(res.status);
             setError(res.error);
         }
@@ -110,7 +114,7 @@ const addModuleRecord = async(action,params)=>{
     }    
     let dataMap = action.editFields;
     dataMap.module = params.moduleName;
-    dataMap.ct=new Date().getTime();
+    dataMap.created_time=new Date().getTime();
     Object.keys(dataMap).map(key=>{
         if(dataMap[key] === undefined)
             delete dataMap[key];

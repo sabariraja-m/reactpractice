@@ -44,7 +44,7 @@ export default function ReportFilter(props){
         setFilterApplied(true);
         if(filter.criteriaList.length){
             let criteriaList = []
-            let filterObject = {...filter,criteriaList,...{"currentPage":1,"pageQuery":"","pagination":""}};
+            let filterObject = {...filter,criteriaList,...{"sortBy":"created_time","sortOrder":"Asc","currentPage":1,"pageQuery":"","pagination":""}};
             setFilter(filterObject);
             handleModuleDispatch({"type":"get","filter":filterObject})     
         }        

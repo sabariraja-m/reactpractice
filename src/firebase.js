@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from "firebase/auth";
 import { doc, setDoc, getDoc, getDocs, addDoc, deleteDoc,collection, limit, getFirestore, query, where,orderBy,startAfter, endBefore, endAt, startAt} from "firebase/firestore"; 
-import { defer } from 'react-router-dom';
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -156,7 +155,7 @@ export async function addModule(moduleMap,orgId){
   return true;
 }
 export async function getReportData(params){
-  let records = await getCollection(`orgs/${params.orgId}/modules/${params.moduleName}/records`,[],20,["ct","asc"],"","",true);
+  let records = await getCollection(`orgs/${params.orgId}/modules/${params.moduleName}/records`,[],20,["created_time","asc"],"","",true);
   let fields = await getCollection(`orgs/${params.orgId}/modules/${params.moduleName}/fields`,[],20,["order","asc"]);
   return {records,fields};
 }
@@ -182,9 +181,288 @@ export async function fetchListItems(orgId,module,criteria,searchValue,searchFie
 	  criteria.push([field,"<=",searchValue+ '~'])
 	})
   }
-  return await getCollection(`orgs/${orgId}/modules/${module}/records`,criteria,10,["ct","asc"],lastVisible,"startAfter",true);
+  return await getCollection(`orgs/${orgId}/modules/${module}/records`,criteria,10,["created_time","asc"],lastVisible,"startAfter",true);
 }
 
 export async function deleteRecord(orgId,module,id){
-  return await deleteDoc(doc(db, `orgs/${orgId}/modules/${module}/records/${id}`));
+	return await deleteDoc(doc(db, `orgs/${orgId}/modules/${module}/records/${id}`));
 }
+export async function addSampleData(){
+	let modules = [
+		{
+			apiName:"Services",
+			order:1,
+			pluralName:"Services",
+			singularName:"Service",
+		},
+		{
+			apiName:"Customers",
+			order:2,
+			pluralName:"Customers",
+			singularName:"Customer",
+		},
+		{
+			apiName:"Appointments",
+			order:3,
+			pluralName:"Appointments",
+			singularName:"Appointment",
+		}
+	]
+	
+	let services = [
+		{
+			apiName:"name",
+			displayName:"Name",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Services",
+			order:0,
+			reportWidth:150,
+			required:true,
+			type:"single_line"
+		},
+		{
+			apiName:"duration",
+			displayName:"Duration",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Services",
+			order:1,
+			reportWidth:150,
+			required:true,
+			type:"number"
+		},
+		{
+			apiName:"cost",
+			displayName:"Cost",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Services",
+			order:2,
+			reportWidth:150,
+			required:true,
+			type:"number"
+		},
+		{
+			apiName:"description",
+			default:true,
+			displayName:"Description",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Services",
+			order:3,
+			reportWidth:150,
+			required:false,
+			type:"multi_line"
+		},
+		{
+			apiName:"created_time",
+			default:true,
+			displayName:"Created Time",
+			hidden:false,
+			isCustomField:false,
+			isEditAllowed:false,
+			isFormField:false,
+			module:"Services",
+			order:4,
+			reportWidth:150,
+			required:false,
+			type:"date_time"
+		}
+	];
+	let customers = [
+		{
+			apiName:"name",
+			displayName:"Name",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Customers",
+			order:0,
+			reportWidth:150,
+			required:true,
+			type:"single_line"
+		},
+		{
+			apiName:"email",
+			displayName:"Email",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Customers",
+			order:1,
+			reportWidth:230,
+			required:true,
+			type:"email"
+		},
+		{
+			apiName:"phone",
+			displayName:"Phone",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Customers",
+			order:2,
+			reportWidth:150,
+			required:false,
+			type:"phone"
+		},
+		{
+			apiName:"created_time",
+			default:true,
+			displayName:"Created Time",
+			hidden:false,
+			isCustomField:false,
+			isEditAllowed:false,
+			isFormField:false,
+			module:"Customers",
+			order:3,
+			reportWidth:150,
+			required:false,
+			type:"date_time"
+		}			
+	];
+	let appointments = [
+		{
+			apiName:"start_time",
+			displayName:"Start Time",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Appointments",
+			order:0,
+			reportWidth:150,
+			required:true,
+			type:"date_time"
+		},
+		{
+			apiName:"service",
+			displayName:"Service",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Appointments",
+			order:1,
+			reportWidth:150,
+			required:true,
+			type:"lookup",
+			lookupModule:"Services"
+		},
+		{
+			apiName:"customer",
+			displayName:"Customer",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Appointments",
+			order:2,
+			reportWidth:150,
+			required:true,
+			type:"lookup",
+			lookupModule:"Customers"
+		},
+		{
+			apiName:"notes",
+			displayName:"Notes",
+			hidden:false,
+			isCustomField:true,
+			isEditAllowed:true,
+			isFormField:true,
+			module:"Appointments",
+			order:3,
+			reportWidth:150,
+			required:false,
+			type:"multi_line"
+		},
+		{
+			apiName:"created_time",
+			default:true,
+			displayName:"Created Time",
+			hidden:false,
+			isCustomField:false,
+			isEditAllowed:false,
+			isFormField:false,
+			module:"Appointments",
+			order:4,
+			reportWidth:150,
+			required:false,
+			type:"date_time"
+		}	
+	];
+	let serviceRecords = [
+		{
+			"name":"Short Hair Cut",
+			"duration":15,
+			"cost":100,
+			"description":"Short hair refers to any haircut with little length. It may vary from above the ears to below the chin. If a man's hair reaches the chin, it may not be considered short. For a woman, however, short varies from close-cropped to just above the shoulders."
+		},
+		{
+			"name":"Long Hair Cut",
+			"duration":30,
+			"cost": 150,
+			"description": "Haircutting is the process of cutting, tapering, texturizing and thinning using any hair cutting tools in order to create a shape."
+		},
+		{
+			"name":"Facial Massage",
+			"duration":30,
+			"cost":200,
+			"description":"Facial massages are treatments you can do with a practitioner or on your own. The technique involves stimulating pressure points on the face, neck, and shoulders"
+		}
+	];
+
+	let orgId = "YDsFYSvpyGSnkuAZi0lH";
+	let requests = [];
+	let k = 1;
+	for(let module of modules){
+		module.created_time=new Date().getTime()+ k++;
+		requests.push(updateDocument(`orgs/${orgId}/modules/${module.apiName}`,module));
+	}
+	for(let module of services){
+		module.created_time=new Date().getTime()+ k++;
+		requests.push(addDocument(`orgs/${orgId}/modules/Services/fields`,module));
+	}
+	for(let module of customers){
+		module.created_time=new Date().getTime()+ k++;
+		requests.push(addDocument(`orgs/${orgId}/modules/Customers/fields`,module));
+	}
+	for(let module of appointments){
+		module.created_time=new Date().getTime()+ k++;
+		requests.push(addDocument(`orgs/${orgId}/modules/Appointments/fields`,module));
+	}
+	await Promise.all(requests);
+	let serviceIds=[];
+	let ct = new Date().getTime();
+	let i =1;
+	for(let module of serviceRecords){
+		module.created_time=ct+(i*60000);
+		let doc = await addDocument(`orgs/${orgId}/modules/Services/records`,module);
+		serviceIds.push(doc.id);
+		i++;
+	}
+	i =1;
+	let startTime = new Date("Mon Apr 25 2023 09:00");
+	while(i< 50){
+		let customer = {"name":"Customer_"+i,"email":"Customer_"+i+"@dummy.dummy","phone":"987654321"+i,"created_time":ct+(i*60000)}
+		let doc = await addDocument(`orgs/${orgId}/modules/Customers/records`,customer);
+		let appointment ={start_time:new Date(startTime).setHours(startTime.getHours()+i),notes:"Notes for appointment_"+i,"service":{id:serviceIds[(i-1)%3],name:serviceRecords[(i-1)%3].name},"customer":{id:doc.id,name:"Customer_"+i},"created_time":ct+(i*60000)}
+		addDocument(`orgs/${orgId}/modules/Appointments/records`,appointment);
+		i++;
+	}
+	i=1;
+	return;
+}
+
