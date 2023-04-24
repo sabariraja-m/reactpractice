@@ -443,10 +443,12 @@ body {
   .signupButton{
     margin: 20px 0px;
     height: 35px;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
+    border: 2px solid lightblue;
+    background: white;
   }
   .signupProviders{
     margin-top: 20px;
@@ -1591,4 +1593,7 @@ input[type ="checkbox"]{
   align-items: center;
   justify-content: center;
   height: 100px;
+}
+.noCursor{
+  cursor: auto;
 }
